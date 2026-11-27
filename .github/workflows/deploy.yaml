@@ -27,7 +27,7 @@ jobs:
       - name: Checkout campaign vault into content/
         uses: actions/checkout@v6
         with:
-          repository: fst0pped/bitd-hawkers-campaign-site
+          repository: fst0pped/bitd-hawkers-campaign
           # token: ${{ secrets.VAULT_TOKEN }} # Remove this line if your campaign repo is public
           path: content
           fetch-depth: 0
