@@ -7,7 +7,7 @@ configuration:
   analytics:
     provider: plausible
   locale: en-GB
-  baseUrl: fst0pped.github.io/bitd-hawkers-campaign
+  baseUrl: solostories.me.uk/bitd-hawkers-campaign-site
   ignorePatterns:
     - private
     - templates
