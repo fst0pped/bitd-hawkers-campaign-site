@@ -1,0 +1,197 @@
+@use "./variables.scss" as *;
+
+// put your custom CSS here!
+// 1. Subtle gaslamp vignette & cleaner typography
+body {
+  letter-spacing: 0.01em;
+}
+
+// 2. Victorian / Broadsheet section dividers
+hr {
+  border: none;
+  border-top: 1px solid var(--lightgray);
+  margin: 2rem 0;
+  position: relative;
+}
+
+// 3. Stamped-label styling for frontmatter tags under the title
+ul.tags {
+  gap: 0.4rem;
+  margin-top: 0.5rem;
+  margin-bottom: 1.5rem;
+
+  li > a.tag-link {
+    background-color: var(--lightgray);
+    color: var(--darkgray);
+    border: 1px solid color-mix(in srgb, var(--secondary) 35%, transparent);
+    border-radius: 3px;
+    padding: 0.15rem 0.55rem;
+    font-size: 0.8rem;
+    font-family: var(--codeFont);
+    text-transform: lowercase;
+    transition: all 0.2s ease;
+
+    &:hover {
+      background-color: var(--highlight);
+      color: var(--secondary);
+      border-color: var(--secondary);
+    }
+  }
+}
+
+// 4. Ledger-style tables (great for Faction status, Claims, and Clocks)
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 1.5rem 0;
+  font-size: 0.95rem;
+
+  th {
+    text-align: left;
+    border-bottom: 2px solid var(--secondary);
+    color: var(--dark);
+    font-family: var(--headerFont);
+    letter-spacing: 0.04em;
+    padding: 0.5rem 0.75rem;
+  }
+
+  td {
+    border-bottom: 1px solid var(--lightgray);
+    padding: 0.5rem 0.75rem;
+  }
+}
+
+.callout[data-callout="actions"] {
+  --color: var(--secondary);
+  --border: color-mix(in srgb, var(--secondary) 45%, transparent);
+  --bg: color-mix(in srgb, var(--lightgray) 55%, var(--light));
+
+  .callout-title {
+    font-family: var(--headerFont);
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    font-size: 0.9rem;
+  }
+
+  table {
+    margin: 0.5rem 0 0 0;
+    font-size: 0.9rem;
+
+    th, td {
+      padding: 0.35rem 0.6rem;
+    }
+
+    code {
+      background: transparent;
+      border: none;
+      color: var(--secondary);
+      font-size: 0.95rem;
+      letter-spacing: 0.1em;
+    }
+  }
+}
+
+// Turf map styles
+.callout[data-callout="turf"] {
+  --color: var(--secondary);
+  --border: color-mix(in srgb, var(--secondary) 45%, transparent);
+  --bg: color-mix(in srgb, var(--lightgray) 40%, var(--light));
+  padding-bottom: 1.15rem; // Adds breathing room below the bottom row
+
+  .callout-title {
+    font-family: var(--headerFont);
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    font-size: 0.9rem;
+  }
+
+  .turf-grid {
+    display: grid;
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+    gap: 0.85rem;
+    margin-top: 0.65rem;
+  }
+
+  .turf-tile {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    background-color: color-mix(in srgb, var(--light) 82%, var(--lightgray));
+    border: 1px dashed color-mix(in srgb, var(--gray) 55%, transparent);
+    border-radius: 4px;
+    padding: 0.55rem 0.45rem;
+    text-align: center;
+    font-size: 0.78rem;
+    line-height: 1.3;
+    color: var(--gray);
+    opacity: 0.78;
+    transition: all 0.2s ease;
+
+    .tile-title {
+      display: block;
+      font-family: var(--headerFont);
+      font-weight: 700;
+      font-size: 0.75rem;
+      letter-spacing: 0.03em;
+      color: var(--darkgray);
+      margin-bottom: 0.2rem;
+    }
+
+    .tile-desc {
+      display: block;
+      margin-top: 0.1rem;
+    }
+
+    // Horizontal bridge to the right neighbor
+    &[data-links*="right"]::after {
+      content: "";
+      position: absolute;
+      top: 50%;
+      left: calc(100% + 1px);
+      width: 0.85rem;
+      height: 3px;
+      background-color: color-mix(in srgb, var(--secondary) 55%, var(--gray));
+      transform: translateY(-50%);
+      pointer-events: none;
+    }
+
+    // Vertical bridge to the neighbor below
+    &[data-links*="down"]::before {
+      content: "";
+      position: absolute;
+      top: calc(100% + 1px);
+      left: 50%;
+      width: 3px;
+      height: 0.85rem;
+      background-color: color-mix(in srgb, var(--secondary) 55%, var(--gray));
+      transform: translateX(-50%);
+      pointer-events: none;
+    }
+
+    // Claimed tiles & Lair
+    &.claimed {
+      opacity: 1;
+      background-color: color-mix(in srgb, var(--secondary) 18%, var(--light));
+      border: 2px solid var(--secondary);
+      box-shadow:
+        inset 0 0 0 1px color-mix(in srgb, var(--secondary) 30%, transparent),
+        0 2px 6px color-mix(in srgb, var(--dark) 18%, transparent);
+      color: var(--dark);
+
+      .tile-title {
+        color: var(--secondary);
+        font-size: 0.78rem;
+      }
+
+      .tile-desc {
+        color: var(--darkgray);
+      }
+
+      &[data-links*="right"]::after,
+      &[data-links*="down"]::before {
+        background-color: var(--secondary);
+      }
+    }
+  }
+}
